@@ -12,12 +12,17 @@ export class OMDBService {
   constructor(private http: HttpClient) {}
 
   fetchMovies(searchInput: string) {
-    const params = new HttpParams({
-      fromObject: {
-        apikey: this._OMDB_API_KEY,
-        s: searchInput,
-      },
-    });
-    return this.http.get(this._OMDB_API_URL, { params });
+    try {
+      const params = new HttpParams({
+        fromObject: {
+          apikey: this._OMDB_API_KEY,
+          s: searchInput,
+        },
+      });
+
+      return this.http.get(this._OMDB_API_URL, { params });
+    } catch (error) {
+      throw error;
+    }
   }
 }

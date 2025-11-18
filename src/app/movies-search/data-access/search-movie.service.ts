@@ -9,23 +9,35 @@ export class SearchMovieService {
   private _omdbService = inject(OMDBService);
   private _searchInput = signal('');
   private _moviesList = signal<SearchResult[]>([]);
+  private _errorMessage = signal<string | null>(null);
 
   searchInput = this._searchInput.asReadonly();
   moviesList = this._moviesList.asReadonly();
+  errorMessage = this._errorMessage.asReadonly();
 
   updateSearchInput(input: string) {
     this._searchInput.set(input);
-    console.log('The search input is now:', this._searchInput());
   }
 
   manageMovieListData(response: any): SearchResult[] {
-    // data validation TODO here
-    console.log(response.Search);
+    if (response && response.Response === 'False' && response.Error) {
+      console.warn('API Error:', response.Error);
+      this._errorMessage.set(response.Error);
+      return [];
+    }
+
+    if (!response || !response.Search || !Array.isArray(response.Search)) {
+      console.warn('Invalid response structure:', response);
+      this._errorMessage.set('Unable to fetch movies. Please try again later.');
+      return [];
+    }
+
+    this._errorMessage.set(null);
 
     const transformedList = response.Search.map((movie: any) => ({
-      title: movie.Title,
-      poster: movie.Poster,
-      year: movie.Year,
+      title: movie.Title || 'Unknown Title',
+      poster: movie.Poster || '',
+      year: movie.Year || 'Unknown Year',
     }));
 
     return transformedList;
@@ -33,9 +45,21 @@ export class SearchMovieService {
 
   searchMovies(input: string) {
     this.updateSearchInput(input);
-    this._omdbService.fetchMovies(input).subscribe((response) => {
-      const processedData = this.manageMovieListData(response);
-      this._moviesList.set(processedData);
+    // Clear previous error
+    this._errorMessage.set(null);
+
+    this._omdbService.fetchMovies(input).subscribe({
+      next: (response) => {
+        const processedData = this.manageMovieListData(response);
+        this._moviesList.set(processedData);
+      },
+      error: (error) => {
+        console.error('HTTP Error:', error);
+        this._errorMessage.set(
+          'Network error. Please check your connection and try again.'
+        );
+        this._moviesList.set([]);
+      },
     });
   }
 }
