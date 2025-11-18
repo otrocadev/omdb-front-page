@@ -1,3 +1,8 @@
 <div class="container mx-auto my-10">
   <app-search-bar></app-search-bar>
+  <div>
+    @for (film of filmsList(); track film.title) {
+    <p>{{ film.title }}</p>
+    }
+  </div>
 </div>

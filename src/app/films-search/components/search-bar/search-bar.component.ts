@@ -20,6 +20,6 @@ export class SearchBarComponent {
   });
 
   onSubmit() {
-    this._searchMovieService.updateSearchInput(this.form.value.searchInput!);
+    this._searchMovieService.searchMovies(this.form.value.searchInput!);
   }
 }
