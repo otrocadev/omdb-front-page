@@ -8,10 +8,10 @@ import type { SearchResult } from '../types/movieResultsType';
 export class SearchMovieService {
   private _omdbService = inject(OMDBService);
   private _searchInput = signal('');
-  private _filmsList = signal<SearchResult[]>([]);
+  private _moviesList = signal<SearchResult[]>([]);
 
   searchInput = this._searchInput.asReadonly();
-  filmsList = this._filmsList.asReadonly();
+  moviesList = this._moviesList.asReadonly();
 
   updateSearchInput(input: string) {
     this._searchInput.set(input);
@@ -24,6 +24,8 @@ export class SearchMovieService {
 
     const transformedList = response.Search.map((movie: any) => ({
       title: movie.Title,
+      poster: movie.Poster,
+      year: movie.Year,
     }));
 
     return transformedList;
@@ -33,7 +35,7 @@ export class SearchMovieService {
     this.updateSearchInput(input);
     this._omdbService.fetchMovies(input).subscribe((response) => {
       const processedData = this.manageMovieListData(response);
-      this._filmsList.set(processedData);
+      this._moviesList.set(processedData);
     });
   }
 }

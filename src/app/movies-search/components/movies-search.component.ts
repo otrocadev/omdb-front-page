@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchMovieService } from '../data-access/search-movie.service';
-import { FilmResultCardComponent } from './film-result-card/film-result-card.component';
+import { MovieResultCardComponent } from './movie-result-card/movie-result-card.component';
 
 @Component({
-  selector: 'app-films-search',
-  imports: [SearchBarComponent, FilmResultCardComponent],
-  templateUrl: './films-search.component.html',
+  selector: 'app-movies-search',
+  imports: [SearchBarComponent, MovieResultCardComponent],
+  templateUrl: './movies-search.component.html',
 })
-export class FilmsSearchComponent {
+export class MoviesSearchComponent {
   private _searchMovieService = inject(SearchMovieService);
 
   searchInput = this._searchMovieService.searchInput;
-  filmsList = this._searchMovieService.filmsList;
+  moviesList = this._searchMovieService.moviesList;
 }

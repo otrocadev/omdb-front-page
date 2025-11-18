@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import type { SearchResult } from '../../films-search/types/movieResultsType';
+import type { SearchResult } from '../../movies-search/types/movieResultsType';
 
 @Injectable({
   providedIn: 'root',
