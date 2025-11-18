@@ -14,4 +14,5 @@ export class MoviesSearchComponent {
   searchInput = this._searchMovieService.searchInput;
   moviesList = this._searchMovieService.moviesList;
   errorMessage = this._searchMovieService.errorMessage;
+  isLoading = this._searchMovieService.isLoading;
 }

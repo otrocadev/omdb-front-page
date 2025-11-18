@@ -10,10 +10,12 @@ export class SearchMovieService {
   private _searchInput = signal('');
   private _moviesList = signal<SearchResult[]>([]);
   private _errorMessage = signal<string | null>(null);
+  private _isLoading = signal(false);
 
   searchInput = this._searchInput.asReadonly();
   moviesList = this._moviesList.asReadonly();
   errorMessage = this._errorMessage.asReadonly();
+  isLoading = this._isLoading.asReadonly();
 
   updateSearchInput(input: string) {
     this._searchInput.set(input);
@@ -45,13 +47,14 @@ export class SearchMovieService {
 
   searchMovies(input: string) {
     this.updateSearchInput(input);
-    // Clear previous error
     this._errorMessage.set(null);
+    this._isLoading.set(true);
 
     this._omdbService.fetchMovies(input).subscribe({
       next: (response) => {
         const processedData = this.manageMovieListData(response);
         this._moviesList.set(processedData);
+        this._isLoading.set(false);
       },
       error: (error) => {
         console.error('HTTP Error:', error);
@@ -59,6 +62,7 @@ export class SearchMovieService {
           'Network error. Please check your connection and try again.'
         );
         this._moviesList.set([]);
+        this._isLoading.set(false);
       },
     });
   }
