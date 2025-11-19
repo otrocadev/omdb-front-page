@@ -25,4 +25,19 @@ export class OMDBService {
       throw error;
     }
   }
+
+  fetchMovieById(id: string) {
+    try {
+      const params = new HttpParams({
+        fromObject: {
+          apikey: this._OMDB_API_KEY,
+          i: id,
+        },
+      });
+
+      return this.http.get(this._OMDB_API_URL, { params });
+    } catch (error) {
+      throw error;
+    }
+  }
 }

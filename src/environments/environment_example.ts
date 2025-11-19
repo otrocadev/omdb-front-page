@@ -4,4 +4,5 @@ export const environment = {
   SUPABASE_KEY: 'your_supabase_database_api_key',
   OMDB_API_KEY: 'your_api_key',
   OMDB_API_URL: 'https://www.omdbapi.com',
+  SESSION_ACTIVE_DEFAULT: false,
 };
