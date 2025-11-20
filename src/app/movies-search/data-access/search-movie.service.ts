@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { OMDBService } from '../../shared/data-access/omdb.service';
-import type { SearchResult } from '../types/movieResultsType';
+import type { SearchResult } from '../../shared/types/movieTypes';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +40,7 @@ export class SearchMovieService {
       title: movie.Title || 'Unknown Title',
       poster: movie.Poster || '',
       year: movie.Year || 'Unknown Year',
+      imdbID: movie.imdbID || '',
     }));
 
     return transformedList;
