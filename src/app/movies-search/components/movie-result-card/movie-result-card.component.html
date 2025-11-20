@@ -2,7 +2,12 @@
   <article
     class="bg-richblack flex max-w-sm border border-slate-gray rounded-2xl shadow-xs flex-col items-center justify-center overflow-hidden"
   >
-    <img class="w-full" [src]="poster()" [alt]="title() + ' poster'" />
+    <img
+      class="w-full"
+      [src]="poster()"
+      (error)="onImageError($event)"
+      [alt]="title() + ' poster'"
+    />
     <section class="flex flex-col p-4">
       <h3 class="font-secondary font-bold text-xl text-screaming-green">
         {{ title() }}

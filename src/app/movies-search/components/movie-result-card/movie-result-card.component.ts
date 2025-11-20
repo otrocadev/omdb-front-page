@@ -1,5 +1,6 @@
 import { Component, computed, input } from '@angular/core';
 import { SearchResult } from '../../../shared/types/movieTypes';
+import { onImageError } from '../../../shared/utils';
 
 @Component({
   selector: 'app-movie-result-card',
@@ -13,4 +14,6 @@ export class MovieResultCardComponent {
   year = computed(() => this.movie()?.year || 'Unknown Year');
   poster = computed(() => this.movie()?.poster || '');
   movieId = computed(() => this.movie()?.imdbID || '');
+
+  onImageError = onImageError;
 }

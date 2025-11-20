@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ShowMovieInfoService } from '../data-access/show-movie-info.service';
 import { MovieInfoCardComponent } from './movie-info-card/movie-info-card.component';
+import { onImageError } from '../../shared/utils';
 
 @Component({
   selector: 'app-movie-info',
@@ -13,6 +14,8 @@ export class MovieInfoComponent {
   private _route = inject(ActivatedRoute);
   private _movieId = '';
 
+  onImageError = onImageError;
+
   private _movieInfoService = inject(ShowMovieInfoService);
   movieInfo = this._movieInfoService.movieInfo;
 
@@ -20,7 +23,6 @@ export class MovieInfoComponent {
     this._route.params.subscribe(async (params) => {
       this._movieId = params['id'];
       this._movieInfoService.getMovieById(this._movieId);
-      console.log(this._movieInfoService.movieInfo());
     });
   }
 }

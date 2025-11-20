@@ -35,7 +35,5 @@ export default class SignUpComponent {
       email: this.form.value.email!,
       password: this.form.value.password!,
     });
-
-    console.log(authResponse);
   }
 }

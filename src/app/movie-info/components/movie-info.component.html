@@ -2,7 +2,12 @@
   class="grid grid-cols-3 justify-items-center items-center container m-auto gap-4 h-screen"
 >
   <section>
-    <img class="rounded-2xl" [src]="movieInfo()?.poster" alt="" />
+    <img
+      class="rounded-2xl"
+      [src]="movieInfo()?.poster"
+      (error)="onImageError($event)"
+      alt="{{ movieInfo()?.title }}"
+    />
   </section>
   <section class="col-span-2">
     <h1 class="text-5xl font-bold text-screaming-green font-secondary">
